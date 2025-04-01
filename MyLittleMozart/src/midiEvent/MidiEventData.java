@@ -4,6 +4,7 @@ public class MidiEventData {
 	private int startEndTick, velocity, note, channel, noteOnOff;
 	private int instrument;
 	
+	//Initiates values for the object
 	public MidiEventData(int startEndTick, int velocity, int note, int channel, int noteOnOff, int instrument) {
 		this.startEndTick = startEndTick;
 		this.velocity = velocity;
@@ -13,6 +14,13 @@ public class MidiEventData {
 		this.instrument = instrument;
 	}
 
+	@Override
+	public String toString() {
+		return "MidiEventData [startEndTick=" + startEndTick + ", velocity=" + velocity + ", note=" + note
+				+ ", channel=" + channel + ", noteOnOff=" + noteOnOff + ", instrument=" + instrument + "]";
+	}
+	
+	//Getters and setters for all variables
 	public int getStartEndTick() {
 		return startEndTick;
 	}
