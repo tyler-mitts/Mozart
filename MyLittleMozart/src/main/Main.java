@@ -9,7 +9,7 @@ public class Main {
 		
 		
 		//Testing file to see if parsing works
-		MidiEventData[] data = MidiCsvParser.parseFile("\\Users\\TylerM\\git\\Mozart\\MyLittleMozart\\src\\main\\testfile.csv");
+		MidiEventData[] data = MidiCsvParser.parseFile("resources/testfile.csv");
 		
 		for(int i = 0;i<2;i++) {
 			System.out.println(data[i].toString());
