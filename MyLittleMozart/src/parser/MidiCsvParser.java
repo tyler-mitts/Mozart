@@ -2,13 +2,17 @@ package parser;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
+import javax.sound.midi.ShortMessage;
+import java.util.regex.Pattern;
 
 import midiEvent.MidiEventData;
 
 public class MidiCsvParser {
 	
-	public static MidiEventData[] parseCsv(String filePath) {
+	public static List<MidiEventData> parseCsv(String filePath) {
 		try {
 			File f = new File(filePath); //Creates file object using filePath
 			int numOfLines = 0;
@@ -19,15 +23,21 @@ public class MidiCsvParser {
 			}
 			scanner.close(); //Resets scanner position
 			scanner = new Scanner(f);
-			MidiEventData[] midiObjects = new MidiEventData[numOfLines]; //Create array of MidiEventData objects with the size the number of entries in file
+			List<MidiEventData> midiObjects = new ArrayList<MidiEventData>(numOfLines); //Create array of MidiEventData objects with the size the number of entries in file
+			Pattern pattern = Pattern.compile("[A-Za-z_]*(?=,)");
 			for(int i = 0; i<numOfLines; i++) {
 				int startEndTick = scanner.nextInt();
-				int velocity = scanner.nextInt();
-				int note = scanner.nextInt();
+				scanner.skip(",");
+				int noteOnOff = scanner.next(pattern).equals("Note_on_c") ? ShortMessage.NOTE_ON : ShortMessage.NOTE_OFF;
+				scanner.skip(",");
 				int channel = scanner.nextInt();
-				int noteOnOff = scanner.nextInt();
+				scanner.skip(",");
+				int note = scanner.nextInt();
+				scanner.skip(",");
+				int velocity = scanner.nextInt();
+				scanner.skip(",");
 				int instrument = scanner.nextInt();
-				midiObjects[i] = new MidiEventData(startEndTick,velocity,note,channel,noteOnOff,instrument);
+				midiObjects.add(i, new MidiEventData(startEndTick,velocity,note,channel,noteOnOff,instrument));
 
 			}
 			scanner.close();
