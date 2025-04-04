@@ -8,7 +8,7 @@ import midiEvent.MidiEventData;
 
 public class MidiCsvParser {
 	
-	public static MidiEventData[] parseFile(String filePath) {
+	public static MidiEventData[] parseCsv(String filePath) {
 		try {
 			File f = new File(filePath); //Creates file object using filePath
 			int numOfLines = 0;
