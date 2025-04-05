@@ -9,20 +9,40 @@ import javax.sound.midi.ShortMessage;
 
 import midiEvent.MidiEventData;
 
+/**
+ * Utility class for parsing MIDI data from CSV files.
+ * Extracts MIDI event information and converts it into MidiEventData objects.
+ */
 public class MidiCsvParser {
 	
+	/**
+	 * Parses a CSV file containing MIDI event data.
+	 * 
+	 * <p>The CSV file should have at least 6 columns in the following order:
+	 * <ol>
+	 *   <li>Tick (time position)</li>
+	 *   <li>Note event type ("Note_on_c" or other for Note Off)</li>
+	 *   <li>Channel (0-15)</li>
+	 *   <li>Note number (0-127)</li>
+	 *   <li>Velocity (0-127)</li>
+	 *   <li>Instrument number (0-127)</li>
+	 * </ol>
+	 * 
+	 * @param filePath The path to the CSV file to parse
+	 * @return A List of MidiEventData objects containing the parsed data, or null if the file is not found
+	 */
 	public static List<MidiEventData> parseCsv(String filePath) {
 		try {
-			File f = new File(filePath); //Creates file object using filePath
+			File f = new File(filePath); // Creates file object using filePath
 			int numOfLines = 0;
-			Scanner scanner = new Scanner(f); //Creates scanner for parsing file
-			while(scanner.hasNextLine() != false) { //Tests how many lines are in the file
+			Scanner scanner = new Scanner(f); // Creates scanner for parsing file
+			while(scanner.hasNextLine() != false) { // Tests how many lines are in the file
 				numOfLines++;
 				scanner.nextLine();
 			}
-			scanner.close(); //Resets scanner position
+			scanner.close(); // Resets scanner position
 			scanner = new Scanner(f);
-			List<MidiEventData> midiObjects = new ArrayList<MidiEventData>(numOfLines); //Create array of MidiEventData objects with the size the number of entries in file
+			List<MidiEventData> midiObjects = new ArrayList<MidiEventData>(numOfLines); // Create array of MidiEventData objects with the size the number of entries in file
 			for(int i = 0; i<numOfLines; i++) {
 				String line = scanner.nextLine();
 				String[] parts = line.split(",");
@@ -37,12 +57,11 @@ public class MidiCsvParser {
 					
 					midiObjects.add(i, new MidiEventData(startEndTick, velocity, note, channel, noteOnOff, instrument));
 				}
-
 			}
 			scanner.close();
 			return midiObjects;
 		} catch(FileNotFoundException e) {
-			System.err.println("The file could not be found."); //Returns error if file is invalid
+			System.err.println("The file could not be found."); // Returns error if file is invalid
 			return null;
 		}
 	}

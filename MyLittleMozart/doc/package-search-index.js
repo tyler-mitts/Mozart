@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"m":"MyLittleMozart","l":"factory"},{"m":"MyLittleMozart","l":"main"},{"m":"MyLittleMozart","l":"midiEvent"},{"m":"MyLittleMozart","l":"parser"},{"m":"MyLittleMozart","l":"strategy.instrument"},{"m":"MyLittleMozart","l":"strategy.pitch"}];updateSearchResults();
